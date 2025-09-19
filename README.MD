@@ -72,11 +72,16 @@ card[i]와 card[rnd]를 교환
 반복문을 통해 0~51까지 수행
 
 ---
+
+```
 for (int i = 0; i < 52; i++) {
     int rnd = rand() % 52;
     Card temp = deck[i];
     deck[i] = deck[rnd];
     deck[rnd] = temp;
 }
+```
+
+
 ---
 
