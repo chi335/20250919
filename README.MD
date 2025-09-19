@@ -190,5 +190,84 @@ int index[] = {0, 2, 4, 5, 7, 9, 11, 12};
 ---
 
 ⚙️ 주파수 계산 함수 (정수형 반환)
+'''
+int calc_frequency(int octave, int semitoneIndex) {
+    double baseFreq = 32.7032;  // 옥타브 1의 도(C) 주파수
+    double freq = baseFreq * pow(2, octave - 1 + semitoneIndex / 12.0);
+    return (int)(freq + 0.5);  // 소수점 첫째 자리 반올림
+}
+'''
 
+---
+🔉 주파수로 소리 출력 (Windows용)
+
+Windows API의 Beep(frequency, duration) 함수 사용
+
+헤더: <windows.h>
+'''
+#include <windows.h>
+
+Beep(440, 500);  // 라(A) 440Hz 음을 0.5초 동안 출력
+'''
+
+---
+⌨️ 키 입력 처리: getch() vs scanf()
+
+scanf() 사용 시 Enter 키 입력 필요 → 음이 끊기고 어색함
+
+getch()는 즉시 입력받을 수 있어 자연스러운 연주 가능
+
+'''
+#include <conio.h>
+
+char ch = getch();  // 사용자가 키를 누를 때까지 대기
+'''
+
+---
+🖥 실행 예시
+'''
+도레미파솔라시도
+도시라솔파미레도
+'''
+
+
+스피커에서 각 음에 해당하는 소리가 연속적으로 출력됩니다.
+
+각 음은 약 0.5초씩 유지됩니다
+
+---
+🧪 전체 연주 예시 코드
+
+'''
+#include <stdio.h>
+#include <windows.h>
+#include <math.h>
+#include <conio.h>
+
+int index[] = {0, 2, 4, 5, 7, 9, 11, 12};  // 도 ~ 도
+
+int calc_frequency(int octave, int semitoneIndex) {
+    double baseFreq = 32.7032;  // 1옥타브 도
+    double freq = baseFreq * pow(2, octave - 1 + semitoneIndex / 12.0);
+    return (int)(freq + 0.5);  // 반올림
+}
+
+int main() {
+    int octave = 4;
+
+    // 상행: 도레미파솔라시도
+    for (int i = 0; i < 8; i++) {
+        int freq = calc_frequency(octave, index[i]);
+        Beep(freq, 500);
+    }
+
+    // 하행: 도시라솔파미레도
+    for (int i = 7; i >= 0; i--) {
+        int freq = calc_frequency(octave, index[i]);
+        Beep(freq, 500);
+    }
+
+    return 0;
+}
+'''
 
